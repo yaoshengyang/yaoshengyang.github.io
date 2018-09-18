@@ -1,11 +1,11 @@
 # Site settings
-title: Hux Blog
+title: yaoshengyang Blog
 SEOTitle: yaoshengyang的博客 | yaosy Blog
 header-img: img/home-bg.jpg
-email: huxpro@gmail.com
+email: 
 description: "微店性能测试组 yaosy个人博客，与你一起发现更大的世界。"
 keyword: "yaoshengyang yaosy 微店 性能测试 稳定性 技术风险 高可用"
-url: "https://huangxuan.me"              # your host, for absolute URL
+url: ""              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 # Publish posts or collection documents with a future date.
@@ -13,10 +13,6 @@ future: true
 
 # SNS settings
 RSS: false
-weibo_username:     huxpro
-zhihu_username:     huxpro
-github_username:    huxpro
-twitter_username:   huxpro
 #facebook_username:  huxpro
 #linkedin_username:  firstname-lastname-idxxxx
 
@@ -72,7 +68,7 @@ ga_domain: huangxuan.me
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "For the next quantum leap<br>离开世界之前，一切都是过程"
+sidebar-about-description: "For the next quantum leap<br>浮生若梦"
 sidebar-avatar: /img/avatar-hux-ny.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
