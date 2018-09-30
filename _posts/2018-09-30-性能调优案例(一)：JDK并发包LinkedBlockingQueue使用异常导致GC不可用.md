@@ -4,10 +4,10 @@
 2018年4月某服务提交全面性能测试，在系统达到瓶颈压力后。服务RT大幅度抖动，且监控平台发现该服务GC情况异常，具体表现为YGC单次高达150ms，且YGCT越来越高最终无法YGC，不断执行FGC，且应用最终不可用。
 
 - **应用的整个GC过程：**
-![GC情况](./gc情况.png)
+![GC情况](img/gc情况.png)
 
 - **最后的GC不可用，每秒均执行FGC：**
-![GC情况](./gc情况2.png)
+![GC情况](img/gc情况2.png)
 
 ### 问题初步排查与猜测
 遇到到问题后，首先怀疑出现了内存泄露问题，保持系统持续的高压力，执行内存dump操作，得到hprof结果，用MAT进行分析，MAT分析工具warning：LinkedBlockingQueue是可能存在的内存泄露对象。
@@ -39,7 +39,7 @@ logger.error("[new cache setex]elapse={} [queue]={}",rt,executor.getQueue().size
 并继续重现问题，密切关注日志中的队列长度变化，得到了以下的结果：
 
 - **日志中打印的LinkedBlockingQueue长度：**
-![GC情况](./queuesize.png)
+![GC情况](img/queuesize.png)
 
 至此，我们有很大的理由可以认为，YGCT不断增加，是因为CMS收集器使用的标记-复制算法，在本应用中需要标记的对象：LinkedBlockingQueue中的任务元素越来越多，才导致了标记时间的增加，同时，Y区每次GC后能够可用的堆大小也越来越小。最终导致了不断FGC，整个Y区不可用的情况。
 
@@ -58,7 +58,7 @@ private ThreadPoolExecutor executor = new ThreadPoolExecutor(Runtime.getRuntime(
 其中的20000，就是我们暂定的队列长度。
 
 - **GC恢复正常**
-![GC情况](./gc正常.png)
+![GC情况](img/gc正常.png)
 
 至此应用的GC恢复到了正常情况，压力表现中的TPS与RT也不在大幅度抖动，顺带锤实了业内一直错误的认知：YGC不会导致SWT。在我们的长年性能测试经验中，CMS收集器的YGC是有可能导致SWT的，具体需要看GC的对象。
 
