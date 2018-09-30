@@ -1,7 +1,7 @@
-## JDK并发包LinkedBlockingQueue使用异常导致GC不可用
+# JDK并发包LinkedBlockingQueue使用异常导致GC不可用
 
 
-### Notes
+## Notes
 2018年4月某服务提交全面性能测试，在系统达到瓶颈压力后。服务RT大幅度抖动，且监控平台发现该服务GC情况异常，具体表现为YGC单次高达150ms，且YGCT越来越高最终无法YGC，不断执行FGC，且应用最终不可用。
 
 - **应用的整个GC过程：**
@@ -10,7 +10,7 @@
 - **最后的GC不可用，每秒均执行FGC：**
 ![GC情况](/img/gc情况2.png)
 
-### 问题初步排查与猜测
+## 问题初步排查与猜测
 
 遇到到问题后，首先怀疑出现了内存泄露问题，保持系统持续的高压力，执行内存dump操作，得到hprof结果，用MAT进行分析，MAT分析工具warning：LinkedBlockingQueue是可能存在的内存泄露对象。
 
